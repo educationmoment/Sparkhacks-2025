@@ -34,6 +34,17 @@
       <label for="start_date">Start Date (YYYY-MM-DD, optional):</label>
       <input type="text" class="form-control" id="start_date" name="start_date" placeholder="Leave blank for most recent data">
     </div>
+    <!-- Language Selection -->
+    <div class="form-group">
+      <label for="language">Select Language:</label>
+      <select class="form-control" id="language" name="language">
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <option value="fr">French</option>
+        <option value="de">German</option>
+        <option value="zh">Chinese</option>
+      </select>
+    </div>
     <button type="submit" class="btn btn-primary">Fetch Data</button>
   </form>
   
@@ -53,8 +64,8 @@
     <h2 class="mt-4">Detailed Summary</h2>
     <pre>{{ results.full_summary_text }}</pre>
     
-    <h2 class="mt-4">Local LLM Analysis</h2>
-    <pre>{{ results.local_llm_summary }}</pre>
+    <h2 class="mt-4">Local LLM Analysis ({{ selected_language }})</h2>
+    <pre>{{ results.local_llm_summary_translated }}</pre>
   {% endif %}
 </div>
 </body>
