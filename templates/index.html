@@ -4,15 +4,17 @@
   <meta charset="UTF-8">
   <title>Wildfire Risk Tracker</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
-    #map {
+    #map, #heatmapMap {
       min-height: 500px;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
 <div class="container mt-4">
-  <h1>Wildfire Risk Tracker with Local LLM</h1>
+  <h1>Wildfire Risk Tracker</h1>
   <form method="POST" class="mt-4">
     <div class="form-group">
       <label for="source">Data Source:</label>
@@ -45,17 +47,65 @@
   
   {% if results %}
     <hr>
-    <h2>Wildfire Map</h2>
+    <h2>Wildfire Map (Detailed Markers)</h2>
     <div id="map">
       {{ results.map_html | safe }}
     </div>
     
+    <h2 class="mt-4">Heatmap of Active Fires</h2>
+    <div id="heatmapMap"></div>
+    
     <h2 class="mt-4">Detailed Summary</h2>
     <pre>{{ results.full_summary_text }}</pre>
     
-    <h2 class="mt-4">Local LLM Analysis</h2>
-    <pre>{{ results.local_llm_summary }}</pre>
+    <h2 class="mt-4">Gemini Analysis</h2>
+    <pre>{{ results.gemini_summary }}</pre>
   {% endif %}
 </div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+
+{% if results %}
+  <script>
+    var activeFires = {{ active_fires | tojson | safe }};
+    if (typeof activeFires === 'undefined' || !activeFires.length) {
+      console.error('activeFires data not defined or empty.');
+      activeFires = [];
+    }
+    
+    var heatmap = L.map('heatmapMap').setView([40, -100], 4);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(heatmap);
+
+
+    var heatData = activeFires.map(function(fire) {
+      var lat = parseFloat(fire.latitude);
+      var lng = parseFloat(fire.longitude);
+      var brightness = parseFloat(fire.brightness);
+      var intensity = Math.min(brightness / 500, 1);
+      return [lat, lng, intensity];
+    });
+
+    L.heatLayer(heatData, {
+      radius: 25,
+      blur: 15,
+      maxZoom: 10
+    }).addTo(heatmap);
+
+    activeFires.forEach(function(fire) {
+      var lat = parseFloat(fire.latitude);
+      var lng = parseFloat(fire.longitude);
+      var brightness = parseFloat(fire.brightness);
+      
+      var risk = Math.round((brightness / 500) * 100);
+      risk = Math.min(100, Math.max(1, risk));
+
+      L.marker([lat, lng]).addTo(heatmap)
+        .bindPopup("Risk: " + risk + "%<br>Brightness: " + brightness);
+    });
+  </script>
+{% endif %}
 </body>
 </html>
