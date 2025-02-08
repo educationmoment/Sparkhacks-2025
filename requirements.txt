@@ -1,0 +1,8 @@
+Flask
+requests
+folium
+geopy
+numpy
+scikit-learn
+transformers
+torch
