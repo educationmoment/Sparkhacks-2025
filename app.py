@@ -11,10 +11,9 @@ from google import genai
 
 app = Flask(__name__)
 
-FIRMS_KEY = "FIRMS key"
+FIRMS_MAP_KEY = "FIRMS key"
 GEMINI_KEY = "Gemini key"
 
-FIRMS_MAP_KEY = FIRMS_KEY
 BASE_URL = "https://firms.modaps.eosdis.nasa.gov/api/area/csv/"
 ALLOWED_SOURCES = [
     "US/CANADA, Near/Ultra Real-time (LANDSAT)",       # US/Canada only LANDSAT Near Real-Time, Real-Time and Ultra Real-Time
