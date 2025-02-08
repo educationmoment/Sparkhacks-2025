@@ -12,7 +12,7 @@ from google import genai
 app = Flask(__name__)
 
 
-FIRMS_MAP_KEY = "6f645ed435dbe07885371d90c76f39a7"
+FIRMS_MAP_KEY = "FIRMSKEY"
 BASE_URL = "https://firms.modaps.eosdis.nasa.gov/api/area/csv/"
 ALLOWED_SOURCES = [
     "US/CANADA, Near/Ultra Real-time (LANDSAT)",       # US/Canada only LANDSAT Near Real-Time, Real-Time and Ultra Real-Time
@@ -24,7 +24,7 @@ ALLOWED_SOURCES = [
     "WORLD Standard (VIIRS-SUMOI)"      # VIIRS Suomi-NPP Standard Processing
 ]
 
-gemini_client = genai.Client(api_key="AIzaSyDipXpuqsvnDVmPqxYgHnRPCDRIp59rPXY")
+gemini_client = genai.Client(api_key="GEMINIKEY")
 
 geolocator = Nominatim(user_agent="wildfire_tracker_app")
 
