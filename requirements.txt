@@ -4,5 +4,6 @@ folium
 geopy
 numpy
 scikit-learn
-transformers
-torch
+google-auth
+google-auth-oauthlib
+google-genai
