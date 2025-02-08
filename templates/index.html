@@ -5,55 +5,23 @@
   <title>Wildfire Risk Tracker</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <style>
-    #map, #heatmapMap {
-      min-height: 500px;
-      margin-bottom: 20px;
-    }
-    .mt-4 {
-      background-color: rgb(244, 244, 244);
-      padding: 2vw 2vh;
-      border: solid 2px black;
-
-      border-radius: 30px;
-    }
-
-    .form-group {
-      background-color: rgb(210, 210, 210);
-      
-      padding: 2vw 2vh;
-      border: double 2px black;
-      border-radius: 5%;
-      margin-left: 0;
-      margin-right: 0;
-
-      /* margin:  */
-    }
-  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"/>
 </head>
 <body>
 
-<header style="
-    background-color: cyan;
-    
-    width: 100vw;
-    height: 7vh;
-
-    padding: 2px;
-    border-bottom: double 5px black;
-
-    position: fixed;
-    top: 0;
-
-  ">Header Content</header>
+<header class="page-header">
+  <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"> 
+  <p class="text-header">Wildfire Risk Tracker</p> 
+  <p class="text-authors">The<br> Boring<br> Design<br> Team</p>
+</header>
 
 <div class="dummy-class" style="margin-top: 10vh;"></div>
 
 <div class="container mt-4">
 
-  <h1>Wildfire Risk Tracker</h1>
+  <h1>Description</h1>
   <form method="POST" class="mt-4" id="inner-border">
-  <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+  <!-- <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"> -->
   <form method="POST" class="mt-4">
     <div class="form-group">
       <label for="source">Data Source:</label>
@@ -72,7 +40,7 @@
 
     <!-- Input Day Range -->
     <div class="form-group">
-      <label for="day_range">Day Range (1-10):</label>
+      <label for="day_range">Days from Start Date (1-10):</label>
       <input type="number" class="form-control" id="day_range" name="day_range" min="1" max="10" value="3">
     </div>
 
