@@ -29,7 +29,6 @@ Wildfire Risk Tracker is a Flask-based web application that retrieves real-time 
 
 ## Installation
 
-1. **Clone the Repository:**
 
    ```bash
    git clone https://github.com/educationmoment/Sparkhacks-2025.git
@@ -37,5 +36,6 @@ Wildfire Risk Tracker is a Flask-based web application that retrieves real-time 
    python -m venv venv
    source venv/bin/activate
    pip install -r requirements.txt
+   python3 app.py
 ```
   
