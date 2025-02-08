@@ -35,7 +35,7 @@ geolocator = Nominatim(user_agent="wildfire_tracker_app")
 def summarize_with_gemini(text):
 
     prompt = (
-        f"Please provide a concise summary and analysis of the following wildfire detection data:\n\n"
+        f"Please provide a concise summary and analysis, ignoring brightness, and give the exact names of potential risk areas of the following wildfire detection data:\n\n"
         f"{text}\n\nSummary:"
     )
     response = gemini_client.models.generate_content(
