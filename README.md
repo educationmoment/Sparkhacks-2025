@@ -1,4 +1,4 @@
-# Wildfire Risk Tracker with GPU-Accelerated Local LLM Summarization
+# Wildfire Risk Tracker with GPU-Accelerated Local LLM
 
 A Flask web application that retrieves wildfire detection data from NASA FIRMS, visualizes it on an interactive map (using Folium), clusters detections to identify risk areas, reverse-geocodes coordinates to human-readable addresses, and uses a GPU-accelerated local summarization model (via Hugging Face Transformers) to produce concise analyses.
 
