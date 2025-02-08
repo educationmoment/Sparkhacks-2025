@@ -15,13 +15,13 @@ app = Flask(__name__)
 FIRMS_MAP_KEY = "6f645ed435dbe07885371d90c76f39a7"
 BASE_URL = "https://firms.modaps.eosdis.nasa.gov/api/area/csv/"
 ALLOWED_SOURCES = [
-    "LANDSAT_NRT",       # US/Canada only LANDSAT Near Real-Time, Real-Time and Ultra Real-Time
-    "MODIS_NRT",         # MODIS Near Real-Time, Real-Time and Ultra Real-Time
-    "MODIS_SP",          # MODIS Standard Processing
-    "VIIRS_NOAA20_NRT",  # VIIRS NOAA-20 Near Real-Time, Real-Time and Ultra Real-Time
-    "VIIRS_NOAA21_NRT",  # VIIRS NOAA-21 Near Real-Time, Real-Time and Ultra Real-Time
-    "VIIRS_SNPP_NRT",    # VIIRS Suomi-NPP Near Real-Time, Real-Time and Ultra Real-Time
-    "VIIRS_SNPP_SP"      # VIIRS Suomi-NPP Standard Processing
+    "US/CANADA, Near/Ultra Real-time (LANDSAT)",       # US/Canada only LANDSAT Near Real-Time, Real-Time and Ultra Real-Time
+    "WORLD Near/Ultra Real-time (MODIS)",         # MODIS Near Real-Time, Real-Time and Ultra Real-Time
+    "WORLD Standard (MODIS)",          # MODIS Standard Processing
+    "WORLD Near/Ultra Real-time (VIIRS-20)",  # VIIRS NOAA-20 Near Real-Time, Real-Time and Ultra Real-Time
+    "WORLD Near/Ultra Real-time (VIRRS-21)",  # VIIRS NOAA-21 Near Real-Time, Real-Time and Ultra Real-Time
+    "WORLD Near/Ultra Real-time (VIRRS-SUMOI)",    # VIIRS Suomi-NPP Near Real-Time, Real-Time and Ultra Real-Time
+    "WORLD Standard (VIIRS-SUMOI)"      # VIIRS Suomi-NPP Standard Processing
 ]
 
 gemini_client = genai.Client(api_key="AIzaSyDipXpuqsvnDVmPqxYgHnRPCDRIp59rPXY")
