@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"/>
 </head>
 <body>
-<img class="background" src="{{ url_for('static', filename='background-fire.jpg') }}">
+<img class="background" src="{{ url_for('static', filename='background.png') }}">
 <header class="page-header">
   <img class="header-images" src="{{ url_for('static', filename='logo.png') }}" alt="Logo"> 
   <p class="text-header">Wildfire Risk Tracker</p> 
@@ -20,6 +20,7 @@
 <div class="container mt-4">
 
   <h1>Description</h1>
+  <p></p>
   <form method="POST" class="mt-4" id="inner-border">
   <form method="POST" class="mt-4">
     <div class="form-group">
@@ -76,7 +77,6 @@
     <h2 class="mt-4">Gemini Analysis</h2>
     <pre>{{ results.gemini_summary }}</pre>
   {% endif %}
-  <p><br>Lorem ipsum<br> dolor sit<br> amet <br>consectetur adipisicing<br> elit. Iure<br> aperiam nesciunt <br>corporis,<br> impedit ullam sequi minus<br>. Eum <br>iure voluptate, ipsa consequatur ipsam <br>debitis sint voluptas ad, blanditiis fuga,<br> hic soluta?</p>
 </div>
 
 

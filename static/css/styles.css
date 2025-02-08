@@ -47,7 +47,7 @@ button:hover {
     top: 0;
 
     display: grid;
-    grid-template-columns: 3fr 5fr 3fr;
+    grid-template-columns: 2fr 4fr 1fr;
     justify-content: center;
 
     z-index: 9000;
