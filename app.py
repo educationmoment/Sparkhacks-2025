@@ -31,7 +31,6 @@ ALLOWED_SOURCES = list(SOURCE_MAP.keys())
 gemini_client = genai.Client(api_key="placeholder")
 
 # initialize API clients
-gemini_client = genai.Client(api_key="geminikey")
 geolocator = Nominatim(user_agent="wildfire_tracker_app")
 
 def summarize_with_gemini(text):
