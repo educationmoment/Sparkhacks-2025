@@ -8,20 +8,19 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"/>
 </head>
 <body>
-
+<img class="background" src="{{ url_for('static', filename='background-fire.jpg') }}">
 <header class="page-header">
-  <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"> 
+  <img class="header-images" src="{{ url_for('static', filename='logo.png') }}" alt="Logo"> 
   <p class="text-header">Wildfire Risk Tracker</p> 
-  <p class="text-authors">The<br> Boring<br> Design<br> Team</p>
+  <img class="header-images" src="{{ url_for('static', filename='bdt.png') }}"/>
 </header>
 
-<div class="dummy-class" style="margin-top: 10vh;"></div>
+<div class="dummy-class"></div>
 
 <div class="container mt-4">
 
   <h1>Description</h1>
   <form method="POST" class="mt-4" id="inner-border">
-  <!-- <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"> -->
   <form method="POST" class="mt-4">
     <div class="form-group">
       <label for="source">Data Source:</label>

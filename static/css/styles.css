@@ -2,21 +2,36 @@ body {
     background-color: black;
 }
 
-img {
-    width: 80px;
-    height: 80px;
-}
 
 button {
     width: 100%;
 
 
     border-radius: 5px;
-    margin: 10px;
+    /* margin: 10px; */
 }
 
 button:hover {
     background-color: rgb(80, 80, 255);
+}
+
+.background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+
+
+
+    margin: 0;
+
+    z-index: -3;
+}
+
+.header-images {
+    width: 100px;
+    height: 100px;
+
+    /* margin: 10px; */
 }
 
 .page-header {
@@ -25,15 +40,20 @@ button:hover {
     width: 100vw;
     height: 100px;
 
-    padding: 2px;
+    padding: 5px;
     border-bottom: double 5px black;
 
     position: fixed;
     top: 0;
 
     display: grid;
-    grid-template-columns: 1fr 5fr 3fr;
+    grid-template-columns: 3fr 5fr 3fr;
+    justify-content: center;
+
+    z-index: 9000;
 }
+
+
 
 .text-header {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -47,6 +67,10 @@ button:hover {
     padding-left: 2px;
     border-left: double 2px black;
     
+}
+
+.dummy-class {
+    margin-top: 14vh;
 }
 
 .mt-4 {
