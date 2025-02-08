@@ -11,9 +11,8 @@ from google import genai
 
 app = Flask(__name__)
 
-FIRMS_MAP_KEY = "FIRMS key"
-GEMINI_KEY = "Gemini key"
 
+FIRMS_MAP_KEY = "FIRMSKEY"
 BASE_URL = "https://firms.modaps.eosdis.nasa.gov/api/area/csv/"
 ALLOWED_SOURCES = [
     "US/CANADA, Near/Ultra Real-time (LANDSAT)",       # US/Canada only LANDSAT Near Real-Time, Real-Time and Ultra Real-Time
@@ -25,7 +24,7 @@ ALLOWED_SOURCES = [
     "WORLD Standard (VIIRS-SUMOI)"      # VIIRS Suomi-NPP Standard Processing
 ]
 
-gemini_client = genai.Client(api_key=GEMINI_KEY)
+gemini_client = genai.Client(api_key="GEMINIKEY")
 
 geolocator = Nominatim(user_agent="wildfire_tracker_app")
 
@@ -44,6 +43,7 @@ def summarize_with_gemini(text):
 
 
 def reverse_geocode(lat, lon):
+    """Return a resolved address (or 'Unknown location') for given latitude and longitude."""
     try:
         location = geolocator.reverse((lat, lon), language="en", timeout=10)
         if location and location.address:
