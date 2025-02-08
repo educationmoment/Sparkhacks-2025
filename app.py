@@ -7,8 +7,7 @@ import time
 from geopy.geocoders import Nominatim
 import numpy as np
 from sklearn.cluster import DBSCAN
-from transformers import pipeline
-import torch
+from google import genai
 
 app = Flask(__name__)
 
@@ -25,25 +24,29 @@ ALLOWED_SOURCES = [
     "VIIRS_SNPP_SP"      # VIIRS Suomi-NPP Standard Processing
 ]
 
+gemini_client = genai.Client(api_key="AIzaSyDipXpuqsvnDVmPqxYgHnRPCDRIp59rPXY")
+
 geolocator = Nominatim(user_agent="wildfire_tracker_app")
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print("CUDA available:", torch.cuda.is_available())
-print("Using device:", device)
 
-
-summarizer = pipeline(
-    "summarization",
-    model="microsoft/Phi-3-mini-128k-instruct",
-    device=0 if torch.cuda.is_available() else -1
-)
-
-if torch.cuda.is_available():
-    summarizer.model.to("cuda")
+def summarize_with_gemini(text):
+    """
+    Uses the Gemini API to generate a summary for the given text.
+    The function builds a prompt and calls the Gemini model "gemini-2.0-flash".
+    """
+    prompt = (
+        f"Please provide a concise summary and analysis of the following wildfire detection data:\n\n"
+        f"{text}\n\nSummary:"
+    )
+    response = gemini_client.models.generate_content(
+        model="gemini-2.0-flash", 
+        contents=prompt
+    )
+    return response.text
 
 
 def reverse_geocode(lat, lon):
-
+    """Return a resolved address (or 'Unknown location') for given latitude and longitude."""
     try:
         location = geolocator.reverse((lat, lon), language="en", timeout=10)
         if location and location.address:
@@ -91,6 +94,7 @@ def cluster_detections(detections):
 def index():
     results = None
     error_message = None
+    detections = []  
 
     if request.method == "POST":
         source = request.form.get("source")
@@ -114,7 +118,6 @@ def index():
                 error_message = f"Error fetching FIRMS data: {e}"
                 csv_data = ""
 
-            detections = []
             if csv_data:
                 try:
                     csv_reader = csv.DictReader(io.StringIO(csv_data))
@@ -163,25 +166,21 @@ def index():
 
             full_summary_text = detailed_summary + risk_summary
 
-            try:
-                summary_output = summarizer(full_summary_text, max_length=100, min_length=50, do_sample=False)
-                local_llm_summary = summary_output[0]["summary_text"]
-            except Exception as e:
-                local_llm_summary = f"Local summarization error: {e}"
-            
+            gemini_summary = summarize_with_gemini(full_summary_text)
             map_html = wildfire_map._repr_html_()
 
             results = {
                 "map_html": map_html,
                 "full_summary_text": full_summary_text,
-                "local_llm_summary": local_llm_summary,
+                "gemini_summary": gemini_summary,
                 "num_detections": len(detections)
             }
     
     return render_template("index.html",
                            results=results,
                            error_message=error_message,
-                           allowed_sources=ALLOWED_SOURCES)
+                           allowed_sources=ALLOWED_SOURCES,
+                           active_fires=detections)
 
 if __name__ == "__main__":
     app.run(debug=True)
