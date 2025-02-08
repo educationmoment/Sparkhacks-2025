@@ -25,7 +25,6 @@ Wildfire Risk Tracker is a Flask-based web application that retrieves real-time 
 - **Python:** 3.7 or higher.
 - **NASA FIRMS MAP_KEY:** A valid API key for accessing FIRMS data.
 - **Gemini API Key:** Your API key for the Google Gemini API.
-- **Google OAuth2 Credentials:** A `client_secret.json` file (placed in the project root) to generate and cache the access token in `token.json`.
 
 ## Installation
 
