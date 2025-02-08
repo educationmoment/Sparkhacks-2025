@@ -12,19 +12,22 @@ from google import genai
 app = Flask(__name__)
 
 
-FIRMS_MAP_KEY = "FIRMSKEY"
+FIRMS_MAP_KEY = "firmskey"
 BASE_URL = "https://firms.modaps.eosdis.nasa.gov/api/area/csv/"
-ALLOWED_SOURCES = [
-    "US/CANADA, Near/Ultra Real-time (LANDSAT)",       # US/Canada only LANDSAT Near Real-Time, Real-Time and Ultra Real-Time
-    "WORLD Near/Ultra Real-time (MODIS)",         # MODIS Near Real-Time, Real-Time and Ultra Real-Time
-    "WORLD Standard (MODIS)",          # MODIS Standard Processing
-    "WORLD Near/Ultra Real-time (VIIRS-20)",  # VIIRS NOAA-20 Near Real-Time, Real-Time and Ultra Real-Time
-    "WORLD Near/Ultra Real-time (VIRRS-21)",  # VIIRS NOAA-21 Near Real-Time, Real-Time and Ultra Real-Time
-    "WORLD Near/Ultra Real-time (VIRRS-SUMOI)",    # VIIRS Suomi-NPP Near Real-Time, Real-Time and Ultra Real-Time
-    "WORLD Standard (VIIRS-SUMOI)"      # VIIRS Suomi-NPP Standard Processing
-]
+SOURCE_MAP = {
+    "US/CANADA, Near/Ultra Real-time (LANDSAT)": "LANDSAT_NRT",
+    "WORLD Near/Ultra Real-time (MODIS)": "MODIS_NRT",
+    "WORLD Standard (MODIS)": "MODIS_SP",
+    "WORLD Near/Ultra Real-time (VIIRS-20)": "VIIRS_NOAA20_NRT",
+    "WORLD Near/Ultra Real-time (VIRRS-21)": "VIIRS_NOAA21_NRT",
+    "WORLD Near/Ultra Real-time (VIIRS-SUMOI)": "VIIRS_SNPP_NRT",
+    "WORLD Standard (VIIRS-SUMOI)": "VIIRS_SNPP_SP"
+}
 
-gemini_client = genai.Client(api_key="GEMINIKEY")
+ALLOWED_SOURCES = list(SOURCE_MAP.keys())
+
+
+gemini_client = genai.Client(api_key="geminikey")
 
 geolocator = Nominatim(user_agent="wildfire_tracker_app")
 
@@ -101,10 +104,11 @@ def index():
         if source not in ALLOWED_SOURCES:
             error_message = "Invalid source selected."
         else:
+            source_code = SOURCE_MAP[source]
             if start_date:
-                url = f"{BASE_URL}{FIRMS_MAP_KEY}/{source}/{area_coordinates}/{day_range}/{start_date}"
+                url = f"{BASE_URL}{FIRMS_MAP_KEY}/{source_code}/{area_coordinates}/{day_range}/{start_date}"
             else:
-                url = f"{BASE_URL}{FIRMS_MAP_KEY}/{source}/{area_coordinates}/{day_range}"
+                url = f"{BASE_URL}{FIRMS_MAP_KEY}/{source_code}/{area_coordinates}/{day_range}"
             
             try:
                 response = requests.get(url)
