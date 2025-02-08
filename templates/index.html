@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wildfire Risk Tracker</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    #map {
+      min-height: 500px;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-4">
+  <h1>Wildfire Risk Tracker with Local LLM</h1>
+  <form method="POST" class="mt-4">
+    <div class="form-group">
+      <label for="source">Data Source:</label>
+      <select class="form-control" id="source" name="source">
+        {% for src in allowed_sources %}
+          <option value="{{ src }}">{{ src }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="area_coordinates">Area Coordinates (west,south,east,north):</label>
+      <input type="text" class="form-control" id="area_coordinates" name="area_coordinates" value="-170,15,-50,75">
+    </div>
+    <div class="form-group">
+      <label for="day_range">Day Range (1-10):</label>
+      <input type="number" class="form-control" id="day_range" name="day_range" min="1" max="10" value="3">
+    </div>
+    <div class="form-group">
+      <label for="start_date">Start Date (YYYY-MM-DD, optional):</label>
+      <input type="text" class="form-control" id="start_date" name="start_date" placeholder="Leave blank for most recent data">
+    </div>
+    <button type="submit" class="btn btn-primary">Fetch Data</button>
+  </form>
+  
+  {% if error_message %}
+    <div class="alert alert-danger mt-4">
+      {{ error_message }}
+    </div>
+  {% endif %}
+  
+  {% if results %}
+    <hr>
+    <h2>Wildfire Map</h2>
+    <div id="map">
+      {{ results.map_html | safe }}
+    </div>
+    
+    <h2 class="mt-4">Detailed Summary</h2>
+    <pre>{{ results.full_summary_text }}</pre>
+    
+    <h2 class="mt-4">Local LLM Analysis</h2>
+    <pre>{{ results.local_llm_summary }}</pre>
+  {% endif %}
+</div>
+</body>
+</html>
