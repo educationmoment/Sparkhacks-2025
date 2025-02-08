@@ -1,6 +1,8 @@
-# Wildfire Risk Tracker with Gemini Summarization
+# ![Logo](static/logo.png) Wildfire Risk Tracker
 
-Wildfire Risk Tracker with Gemini Summarization is a Flask-based web application that retrieves real-time wildfire detection data from NASA FIRMS, visualizes the data using interactive maps (Folium for detailed markers and Leaflet for a heatmap), clusters and reverse-geocodes detections to identify high-risk areas, and generates a concise summary of the wildfire data using the Google Gemini API via the `google-genai` client.
+# Wildfire Risk Tracker
+
+Wildfire Risk Tracker is a Flask-based web application that retrieves real-time wildfire detection data from NASA FIRMS, visualizes the data using interactive maps (Folium for detailed markers and Leaflet for a heatmap), clusters and reverse-geocodes detections to identify high-risk areas, and generates a concise summary of the wildfire data using the Google Gemini API via the `google-genai` client.
 
 ## Features
 
