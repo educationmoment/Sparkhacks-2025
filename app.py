@@ -12,26 +12,38 @@ import torch
 
 app = Flask(__name__)
 
+
 FIRMS_MAP_KEY = "6f645ed435dbe07885371d90c76f39a7"
 BASE_URL = "https://firms.modaps.eosdis.nasa.gov/api/area/csv/"
 ALLOWED_SOURCES = [
-    "LANDSAT_NRT",
-    "MODIS_NRT",
-    "MODIS_SP",
-    "VIIRS_NOAA20_NRT",
-    "VIIRS_NOAA21_NRT",
-    "VIIRS_SNPP_NRT",
-    "VIIRS_SNPP_SP"
+    "LANDSAT_NRT",       # US/Canada only LANDSAT Near Real-Time, Real-Time and Ultra Real-Time
+    "MODIS_NRT",         # MODIS Near Real-Time, Real-Time and Ultra Real-Time
+    "MODIS_SP",          # MODIS Standard Processing
+    "VIIRS_NOAA20_NRT",  # VIIRS NOAA-20 Near Real-Time, Real-Time and Ultra Real-Time
+    "VIIRS_NOAA21_NRT",  # VIIRS NOAA-21 Near Real-Time, Real-Time and Ultra Real-Time
+    "VIIRS_SNPP_NRT",    # VIIRS Suomi-NPP Near Real-Time, Real-Time and Ultra Real-Time
+    "VIIRS_SNPP_SP"      # VIIRS Suomi-NPP Standard Processing
 ]
+
 geolocator = Nominatim(user_agent="wildfire_tracker_app")
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print("CUDA available:", torch.cuda.is_available())
+print("Using device:", device)
+
+
 summarizer = pipeline(
     "summarization",
     model="microsoft/Phi-3-mini-128k-instruct",
     device=0 if torch.cuda.is_available() else -1
 )
 
+if torch.cuda.is_available():
+    summarizer.model.to("cuda")
+
+
 def reverse_geocode(lat, lon):
+
     try:
         location = geolocator.reverse((lat, lon), language="en", timeout=10)
         if location and location.address:
@@ -41,13 +53,14 @@ def reverse_geocode(lat, lon):
     return "Unknown location"
 
 def cluster_detections(detections):
+
     coords = []
     for det in detections:
         try:
             lat = float(det.get("latitude", 0))
             lon = float(det.get("longitude", 0))
             coords.append([lat, lon])
-        except:
+        except Exception:
             continue
 
     if not coords:
@@ -72,6 +85,7 @@ def cluster_detections(detections):
             "address": address
         }
     return risk_areas
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -150,7 +164,7 @@ def index():
             full_summary_text = detailed_summary + risk_summary
 
             try:
-                summary_output = summarizer(full_summary_text, max_length=2000, min_length=50, do_sample=False)
+                summary_output = summarizer(full_summary_text, max_length=100, min_length=50, do_sample=False)
                 local_llm_summary = summary_output[0]["summary_text"]
             except Exception as e:
                 local_llm_summary = f"Local summarization error: {e}"
