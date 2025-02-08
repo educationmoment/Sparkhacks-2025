@@ -43,7 +43,6 @@ def summarize_with_gemini(text):
 
 
 def reverse_geocode(lat, lon):
-    """Return a resolved address (or 'Unknown location') for given latitude and longitude."""
     try:
         location = geolocator.reverse((lat, lon), language="en", timeout=10)
         if location and location.address:
