@@ -30,10 +30,7 @@ geolocator = Nominatim(user_agent="wildfire_tracker_app")
 
 
 def summarize_with_gemini(text):
-    """
-    Uses the Gemini API to generate a summary for the given text.
-    The function builds a prompt and calls the Gemini model "gemini-2.0-flash".
-    """
+
     prompt = (
         f"Please provide a concise summary and analysis of the following wildfire detection data:\n\n"
         f"{text}\n\nSummary:"
@@ -46,7 +43,6 @@ def summarize_with_gemini(text):
 
 
 def reverse_geocode(lat, lon):
-    """Return a resolved address (or 'Unknown location') for given latitude and longitude."""
     try:
         location = geolocator.reverse((lat, lon), language="en", timeout=10)
         if location and location.address:
