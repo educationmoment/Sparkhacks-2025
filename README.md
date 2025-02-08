@@ -1,45 +1,40 @@
-# Wildfire Risk Tracker with GPU-Accelerated Local LLM
+# Wildfire Risk Tracker with Gemini Summarization
 
-A Flask web application that retrieves wildfire detection data from NASA FIRMS, visualizes it on an interactive map (using Folium), clusters detections to identify risk areas, reverse-geocodes coordinates to human-readable addresses, and uses a GPU-accelerated local summarization model (via Hugging Face Transformers) to produce concise analyses.
-
-> **Note:**  
-> This project requires a CUDA-capable GPU and a PyTorch installation with CUDA support to fully leverage GPU acceleration.
+Wildfire Risk Tracker with Gemini Summarization is a Flask-based web application that retrieves real-time wildfire detection data from NASA FIRMS, visualizes the data using interactive maps (Folium for detailed markers and Leaflet for a heatmap), clusters and reverse-geocodes detections to identify high-risk areas, and generates a concise summary of the wildfire data using the Google Gemini API via the `google-genai` client.
 
 ## Features
 
-- **Live Data Retrieval:**  
-  Fetches wildfire detection data from NASA FIRMS using a configurable API.
-
+- **Real-time Data Retrieval:**  
+  Fetches wildfire detection data from NASA FIRMS (limited to 300 entries) based on user-specified parameters.
+  
 - **Interactive Mapping:**  
-  Uses [Folium](https://python-visualization.github.io/folium/) to display detections on an interactive map.
-
-- **Reverse Geocoding:**  
-  Converts geographic coordinates into human-readable addresses using [Nominatim](https://nominatim.org/).
-
-- **Clustering:**  
-  Identifies risk areas by clustering nearby detections with DBSCAN.
-
-- **Local LLM Summarization:**  
-  Leverages a local summarization model (e.g., `microsoft/Phi-3-mini-128k-instruct`) on GPU to produce concise summaries.
-
+  Displays detailed markers on a Folium-generated map and a dynamic heatmap (using Leaflet and the Leaflet.heat plugin) based on active fire data.
+  
+- **Risk Clustering:**  
+  Uses DBSCAN clustering to identify high-risk areas from the detection data, with reverse geocoding for human-readable addresses.
+  
+- **Gemini Summarization:**  
+  Generates a concise summary of the wildfire detection data by sending a prompt to the Gemini API using the `google-genai` client.
+  
 - **Customizable Inputs:**  
-  A user-friendly web form allows you to select the data source, geographic area, day range, and start date.
+  Offers a web form for selecting data source, area coordinates, day range, and start date.
 
 ## Prerequisites
 
 - **Python:** 3.7 or higher.
-- **CUDA-enabled GPU:** Required for GPU acceleration.
-- **PyTorch:** Installed with CUDA support.
-- **Other Python Packages:** Listed in the [Installation](#installation) section.
+- **NASA FIRMS MAP_KEY:** A valid API key for accessing FIRMS data.
+- **Gemini API Key:** Your API key for the Google Gemini API.
+- **Google OAuth2 Credentials:** A `client_secret.json` file (placed in the project root) to generate and cache the access token in `token.json`.
 
 ## Installation
 
+1. **Clone the Repository:**
 
    ```bash
    git clone https://github.com/educationmoment/Sparkhacks-2025.git
    cd Sparkhacks-2025
+   python -m venv venv
+   source venv/bin/activate
    pip install -r requirements.txt
-   python3 app.py
-   Navigate to http://127.0.0.1:5000.
-   ```
-
+```
+  
