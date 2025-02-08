@@ -15,13 +15,29 @@
   <img class="header-images" src="{{ url_for('static', filename='bdt.png') }}"/>
 </header>
 
-<div class="dummy-class"></div>
+
+<header style="
+    background-color: cyan;
+    
+    width: 100vw;
+    height: 7vh;
+
+    padding: 2px;
+    border-bottom: double 5px black;
+
+    position: fixed;
+    top: 0;
+
+  ">Header Content</header>
+
+<div class="dummy-class" style="margin-top: 10vh;"></div>
 
 <div class="container mt-4">
 
-  <h1>Description</h1>
-  <p></p>
+  <h1>Wildfire Risk Tracker</h1>
+
   <form method="POST" class="mt-4" id="inner-border">
+  <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
   <form method="POST" class="mt-4">
     <div class="form-group">
       <label for="source">Data Source:</label>
