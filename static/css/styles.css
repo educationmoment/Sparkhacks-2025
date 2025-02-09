@@ -12,15 +12,33 @@ button:hover {
     background-color: rgb(80, 80, 255);
 }
 
+pre {
+    padding: 5px;
+    border: solid 2px black;
+}
+
 .background {
     position: fixed;
     width: 100vw;
     height: 100vh;
+    top: 0;
 
     margin: 0;
-    z-index: -3;
+    z-index: -1;
 }
 
+.background-shading {
+    position: fixed;
+
+
+    background-color: rgba(64, 64, 84, 0.75);
+    /* background-color: blue; */
+    width: 100vw;
+    height: 100vh;
+
+    margin: 0;
+    z-index: -1;
+}
 .header-images {
     width: 100px;
     height: 100px;
@@ -64,7 +82,7 @@ button:hover {
 }
 
 .dummy-class {
-    margin-top: 14vh;
+    margin-top: 10vh;
 }
 
 .mt-4 {
@@ -88,7 +106,9 @@ button:hover {
 #map, #heatmapMap {
     min-height: 500px;
     margin-bottom: 20px;
+
+    /* padding: 5px; */
+
+    border: solid 5px black;
+    /* border-radius: 30px;  */
 }
-
-
-
