@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 
 # API keys for external service interaction
-FIRMS_MAP_KEY = "firmskey"
+FIRMS_MAP_KEY = "FIRMS_KEU"
 
 BASE_URL = "https://firms.modaps.eosdis.nasa.gov/api/area/csv/"
 SOURCE_MAP = {
@@ -31,7 +31,7 @@ ALLOWED_SOURCES = list(SOURCE_MAP.keys())
 gemini_client = genai.Client(api_key="placeholder")
 
 # initialize API clients
-gemini_client = genai.Client(api_key="geminikey")
+gemini_client = genai.Client(api_key="GEMINI_KEY")
 geolocator = Nominatim(user_agent="wildfire_tracker_app")
 
 def summarize_with_gemini(text):

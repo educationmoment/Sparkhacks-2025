@@ -8,29 +8,17 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"/>
 </head>
 <body>
+
 <img class="background" src="{{ url_for('static', filename='background.png') }}">
+<div class="background-shading"></div>
+
 <header class="page-header">
   <img class="header-images" src="{{ url_for('static', filename='logo.png') }}" alt="Logo"> 
   <p class="text-header">Wildfire Risk Tracker</p> 
   <img class="header-images" src="{{ url_for('static', filename='bdt.png') }}"/>
 </header>
 
-
-<header style="
-    background-color: cyan;
-    
-    width: 100vw;
-    height: 7vh;
-
-    padding: 2px;
-    border-bottom: double 5px black;
-
-    position: fixed;
-    top: 0;
-
-  ">Header Content</header>
-
-<div class="dummy-class" style="margin-top: 10vh;"></div>
+<div class="dummy-class"></div>
 
 <div class="container mt-4">
 
@@ -95,9 +83,6 @@
     <pre>{{ results.gemini_summary }}</pre>
   {% endif %}
 </div>
-
-
-
 
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
